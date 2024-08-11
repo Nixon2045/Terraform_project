@@ -16,3 +16,7 @@ provider "azurerm" {
   client_secret = var.client_id  
 }
 
+resource "azurerm_resource_group" "pruebita-example" {
+  name = "example-resource-group"
+  location = "west europe"
+}
