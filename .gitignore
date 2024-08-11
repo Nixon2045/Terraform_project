@@ -1,0 +1,6 @@
+#archivos que contiene info que no debe ser subida al repo o versionada y binarios
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.tfstate
+.terraform.tfstate.backup
