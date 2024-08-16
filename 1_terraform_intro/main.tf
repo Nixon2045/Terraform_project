@@ -70,10 +70,15 @@ variable "docker_ports"{
 #solicitamos con una variable el nombre que llevara el recurso a crearse en el siguiente bloque
 variable "project_name"{
   type = string
+  description = "Nombre de la variable que quiere crear"
+  validation {        
+        condition = length(var.project_name) > 4
+        error_message = "El nombre es demasiado corto"
+  }
 }
 
 
 resource "azurerm_resource_group" "variablesexample" {
-  name = var.project_name ##aqui es donde utilizamos la variable anterior para dar uso del donde que el usuario ingreso
+  name = var.project_name ##aqui es donde utilizamos la variable anterior para dar nombre al recurso que el usuario escogio
   location = "west europe"
   }
