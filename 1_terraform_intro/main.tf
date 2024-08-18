@@ -82,3 +82,22 @@ resource "azurerm_resource_group" "variablesexample" {
   name = var.project_name ##aqui es donde utilizamos la variable anterior para dar nombre al recurso que el usuario escogio
   location = "west europe"
   }
+
+  # Clase 23 - cadenas interpoladas
+  #si quieremos reutilizar una variable para un recurso diferente 
+  #solo debemos agregar "" comillas como si fuera un string y seguido ponemos un signo de pesos $
+  #abrimos llaves {} quedando con la siguiente sintaxis "${var.project_name}_main" donde al final de la sintaxis
+  #agregamos el texto que nos ayudara a diferencia a un bloque del otro
+  # y si queremos agregar una nueva cadena interpolada la sintaxis seria "${var.project_name}_main ${var.variable_nueva}_ejemplodiferenciador"
+  #realizare el ejemplo con la variable project_name
+
+# Reutilizaremos el recurso anterior que usa la variable de project_name para tomar el nombre del recurso
+resource "azurerm_resource_group" "variablesexample2" {
+  name = "${var.project_name}_main" 
+  location = "west europe"
+  }
+
+resource "azurerm_resource_group" "variablesexample3" {
+  name = "${var.project_name}_secundary"
+  location = "west europe"
+  }  
