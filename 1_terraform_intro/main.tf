@@ -119,3 +119,17 @@ resource "azurerm_resource_group" "variablesexample4" {
     "team" = local.tag
   }
 }
+
+# Clase 25 - Propiedad Count 
+#La propiedad Count viene por defecto en cada uno de los bloques que creamos de recursos en terraform
+# y su valor por defult es 1, si cambiamos su valor a por ejemplo 3 se crearan 3 recursos con los parametros de este bloque
+# lo ejemplificare con el recurso de variableexaple5
+
+resource "azurerm_resource_group" "variablesexample5" {
+  count = 0
+  name = "${var.project_name}_secundary${count.index}"
+  location = "west europe"
+  tags = {
+    "team" = local.tag
+  }
+}
