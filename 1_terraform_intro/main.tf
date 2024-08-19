@@ -81,7 +81,7 @@ variable "project_name"{
 resource "azurerm_resource_group" "variablesexample" {
   name = var.project_name ##aqui es donde utilizamos la variable anterior para dar nombre al recurso que el usuario escogio
   location = "west europe"
-  }
+}
 
   # Clase 23 - cadenas interpoladas
   #si quieremos reutilizar una variable para un recurso diferente 
@@ -95,9 +95,27 @@ resource "azurerm_resource_group" "variablesexample" {
 resource "azurerm_resource_group" "variablesexample2" {
   name = "${var.project_name}_main" 
   location = "west europe"
-  }
+}
 
 resource "azurerm_resource_group" "variablesexample3" {
   name = "${var.project_name}_secundary"
   location = "west europe"
-  }  
+}
+
+#Clase 24 - locals values (valores locales)
+# son valores locales que se asignan o se pueden asignar a un recurso
+#realizare el ejemplo con la creacion del recurso anterior 
+
+locals{
+  RG1 = azurerm_resource_group.variablesexample.id
+  tag = "development"
+}
+
+
+resource "azurerm_resource_group" "variablesexample4" {
+  name = "${var.project_name}_secundary"
+  location = "west europe"
+  tags = {
+    "team" = local.tag
+  }
+}
