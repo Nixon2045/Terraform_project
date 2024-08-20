@@ -81,4 +81,4 @@ variable "project_name"{
 resource "azurerm_resource_group" "variablesexample" {
   name = var.project_name ##aqui es donde utilizamos la variable anterior para dar nombre al recurso que el usuario escogio
   location = "west europe"
-} 
+} # algo de modificacion
