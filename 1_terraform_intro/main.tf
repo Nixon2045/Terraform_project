@@ -127,7 +127,29 @@ resource "azurerm_resource_group" "variablesexample4" {
 
 resource "azurerm_resource_group" "variablesexample5" {
   count = 0 #PRO TIP = Si cambiamos el valor de count a 0 eliminamos todos los recursos ligados a este bloque facilitando la eliminacion de recursos
-  name = "${var.project_name}_secundary${count.index}"
+  name = "${var.project_name}_secundary${count.index}" #la propiedad index de count permite especificar un nombre a cada uno de los recursos empezando por 0 
+  location = "west europe"
+  tags = {
+    "team" = local.tag
+  }
+}
+
+
+#Clase 26 iterando con for_aech -  existe una parametro en terraform para iterar sobre cada uno de los recursos creados y es atravez de la sintaxis for_each 
+#
+
+locals {
+  names = {
+    name01 = "name01"
+    name02 = "name02"
+    name03 = "name03"
+  }
+}
+
+
+resource "azurerm_resource_group" "variablesexample6" {
+  for_each = local.names 
+  name = "${each.value}"
   location = "west europe"
   tags = {
     "team" = local.tag
