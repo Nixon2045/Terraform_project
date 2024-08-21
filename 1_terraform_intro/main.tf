@@ -126,7 +126,7 @@ resource "azurerm_resource_group" "variablesexample4" {
 # lo ejemplificare con el recurso de variableexaple5
 
 resource "azurerm_resource_group" "variablesexample5" {
-  count = 0
+  count = 0 #PRO TIP = Si cambiamos el valor de count a 0 eliminamos todos los recursos ligados a este bloque facilitando la eliminacion de recursos
   name = "${var.project_name}_secundary${count.index}"
   location = "west europe"
   tags = {
