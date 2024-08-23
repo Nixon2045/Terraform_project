@@ -135,8 +135,11 @@ resource "azurerm_resource_group" "variablesexample5" {
 }
 
 
-#Clase 26 iterando con for_aech -  existe una parametro en terraform para iterar sobre cada uno de los recursos creados y es atravez de la sintaxis for_each 
-#
+#Clase 26 iterando con for_aech  
+#existe una parametro en terraform para iterar sobre cada uno de los recursos creados y es atraves de la sintaxis for_each 
+#donde con una variable especifica podemos nombrar e iterar un recurso
+#en el caso de ejemplo vemos como con la variable local de names  pasamos a iterarlo en el for each del bloque del recurso creando asi 3 recursos
+#con los nombres asignados en la varible local de names
 
 locals {
   names = {
@@ -155,3 +158,68 @@ resource "azurerm_resource_group" "variablesexample6" {
     "team" = local.tag
   }
 }
+
+# clase 27 - operadores en terraform 
+
+
+locals {
+  t_string = "cadena de texto"
+  t_number = 123.45 # numeros enteros o con punto 
+  t_booleano = true # o False dependiendo el caso 
+  # una lista puede contener diferentes tipos de datos y se inicia con un par de corchetes
+  t_list = [ 
+    "lista compuesta de elementos",
+    3540.45,
+    true,
+    false,
+  ]
+  t_map = {
+    type_llave = "valor_Asignado_por_mi" # el dato tipo map corresponde a una llave y a un valor asignado, la llave puede llevar el nombre que quiera pero el valor sers el asignado por mi (tambien el que quiera o corresponda)
+  }
+
+ # tambien podemos declarar un tipo de dato complejo, por complejo me refiero a un dato que no se encuentra en terraform
+ # que podemos asignarles diferentes tipos de datos
+ #como el siguiente ejemplo
+  costumer = {
+    Name = "Nixon betancour"
+    Age = 28
+    # podemos adicionar una lista ya que es un tipo de dato
+    Gustos = {
+      deporte = "Basquetball", 
+      comida_favorita = "sushi",
+      Adddress_home = "La_mariana",
+      Address_office = "La_rosa",
+    }
+  }
+}
+
+output "Llamada_a_locals" {
+  value = local.costumer.Gustos.deporte
+}
+
+locals {
+  t_operations = 1 / 1
+}
+
+
+locals {
+  t_logical = 5 < 3
+  t_logical2 = (5 < 3) && (4 > 2) # el && es un operador "and" comparando asi el conjunto de operacion y SI cumplen ambas condiciones u operaciones devolucion un booleano
+  }
+
+
+variable "Rg_count" {
+  type = number
+}
+
+locals{
+  min_Rg_number = 3 #valor por defecto dado el caso
+  rg_no = var.Rg_count > 0 ? var.Rg_count : local.min_Rg_number
+}
+
+resource "azurerm_resource_group" "variablesexample7" {
+  count = local.rg_no
+  name = "rg_${count.index}"
+  location = "west europe"
+}
+
