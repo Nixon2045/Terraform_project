@@ -223,3 +223,66 @@ resource "azurerm_resource_group" "variablesexample7" {
   location = "west europe"
 }
 
+/* Clase 28 - Funciones en terraform 
+Las funciones en terraform son bloques de codigo ya preconfigurado 
+que pueden realizar operaciones matematicas o concatenar cadenas,
+realizar validaciones de prueba o validar subnets.
+son utiles y puedan dar dinamismo al codigo de terraform 
+por eso es importante familiarizarse con sus sintaxis 
+
+para cualquier la documentacion se encuentra en: https://developer.hashicorp.com/terraform/language/functions
+*/
+
+#funcion length()
+variable "length_example" {
+  default = "this string is very long"
+}
+
+output "result_lengt" {
+  value = length(var.length_example)
+} # El resultado de length es 24 debido a que es el numero de las letras y espacios en "this string is very long"
+
+#funcion join()
+variable "join_example" {
+  default = ["this", "string", "is", "very", "long"
+  ]
+}
+
+output "result_join" {
+  value = join("-", var.join_example)
+} # El resultado de join es "this-string-is-very-long" ya que concatena la lista de cadenas de texto en una sola cadena, separada por un delimitador
+
+#funcion split()
+variable "split_example" {
+  default = "this-string-is-very-long"
+}
+
+output "split_result" {
+  value = split("-", var.split_example)
+}# El resultado de split es una lista de string de las cadenas de texto "this-string-is-very-long", separadas cada cadena por el delimitador "-"
+
+#Funcion lookup()
+variable "lookup_example" {
+  default = {
+    "name" = "example"
+    "type" = "demo"
+  }
+}
+
+output "lookup_result" {
+  value = lookup(var.lookup_example, "name", "default_name")
+} #El resultado de esta funcion lookup sera "example" ya que es el valor asignado al par key de "name"
+#lookup() se utiliza para buscar un valor de una key en un mapa de una variable (mapa tambien conocido como diccionario)
+
+#funcion cidrsubnet()
+
+variable "cidrsubnet_example" {
+  default = "192.168.0.0/16"
+}
+
+output "cidrsubnet_result" {
+  value = cidrsubnet(var.cidrsubnet_example, 8, 1)
+} #la funcion cidrsubnet calcula las subredes dentro de un rango dado de cidr 
+#los argumentos dados de 8 y 1 son 8 como los bit a agregar a la mascara de red y 1 como el numero de la subnet que quiero escanear
+
+
