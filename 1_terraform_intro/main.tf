@@ -286,3 +286,19 @@ output "cidrsubnet_result" {
 #los argumentos dados de 8 y 1 son 8 como los bit a agregar a la mascara de red y 1 como el numero de la subnet que quiero escanear
 
 
+/* Clase 29 - iteraciones en terraform 
+*/
+
+locals {
+  names2 = ["Nixon", "Alejandra", "Carito"]
+  mayus = [for i in local.names2: upper(i)]
+  a_names = [for i in local.names2: i if substr(i,0,1) == "A"]
+}
+
+output mayus {
+  value       = local.mayus
+}
+
+output a_names {
+  value       = local.a_names
+}
