@@ -302,3 +302,29 @@ output mayus {
 output a_names {
   value       = local.a_names
 }
+
+
+/* Clase 30 - Data sources o fuentes de datos 
+
+Es informacion que esta fuera de terraform y podemos acceder a ella
+a traves de los data sources, es de solo lectura, con los data sources 
+no podemos crear ni eliminar datos de recursos, pero podemos hacer uso de esa informacion obtenida 
+para usarla dentro de nuestra configuracion de terraform. 
+*/
+
+#ejemplo obteniendo el ID de un recurso creado como subnet para usarla como subnet de un nuevo recurso
+
+
+data "azurerm_virtual_network" "example" {
+  name = "my_vnet"
+  id = "subnet-123456"
+}
+
+resource "azurerm_resource_group" "nuevogrupo" {
+  id = data.azurerm_resource_group.example.id
+  tags = {
+    Name = "my_instance"
+  }
+}
+
+#este ejemplo no sirvio ya que el recurso tiene que estar creado para buscar la informacion dentro de azure en este caso 
