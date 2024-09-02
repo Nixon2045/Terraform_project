@@ -27,10 +27,12 @@ y address_prefixes define el rango de ip que estara disponible para la subred
 */
 
 resource "azurerm_resource_group" "Demo1" {
-  name     = "demo1"
-  location = "West Europe"
+  name     = var.Rg_name
+  location = var.Rg_location
 }
 
+/* - Se deja como comentario ya que como parte de la clase 35 - creacion de modulos, pasaremos este bloque a la carpeta
+de az_network que se encuentra en la carpeta de modules
 
 resource "azurerm_virtual_network" "vnet1" {
   name                = "prueba_vnet"
@@ -41,11 +43,25 @@ resource "azurerm_virtual_network" "vnet1" {
   tags = {
     environment = "Production"
   }
-} 
+}
+*/
 
+/* - Se deja como comentario ya que como parte de la clase 35 - creacion de modulos, pasaremos este bloque a la carpeta
+de az_networks_subnet que se encuentra en la carpeta de modules
 resource "azurerm_subnet" "subnet1" {
     name           = "subnet1"
     resource_group_name = azurerm_resource_group.Demo1.name
     virtual_network_name = azurerm_virtual_network.vnet1.name
     address_prefixes = ["10.0.1.0/24"]
   }
+
+*/
+
+
+# Clase 35 - modulos iy submodulos
+
+module "Vnets" {
+  source = "./modules/az_network"
+  Rg_location = azurerm_resource_group.Demo1.location
+  Rg_name = azurerm_resource_group.Demo1.name
+}
