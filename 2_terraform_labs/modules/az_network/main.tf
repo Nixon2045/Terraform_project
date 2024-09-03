@@ -9,3 +9,7 @@ resource "azurerm_virtual_network" "vnet1" {
     environment = "Production"
   }
 }
+
+module "subnet" {
+  source = ""
+}
