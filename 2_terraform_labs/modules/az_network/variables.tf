@@ -6,3 +6,6 @@ variable "Rg_name" {
 variable "Rg_location" {
   type = string
 }
+variable "vnet_name" {
+  type = string
+}

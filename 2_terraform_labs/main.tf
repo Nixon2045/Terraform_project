@@ -64,10 +64,12 @@ module "Vnets" {
   source = "./modules/az_network"
   Rg_location = azurerm_resource_group.Demo1.location
   Rg_name = azurerm_resource_group.Demo1.name
+  vnet_name = "prueba_vnet"
 }
 
 module "subnets" {
   source = "./modules/az_networks_subnet"
-  gruop_name_subnet = azurerm_resource_group.Demo1.name
-  vnet_name1 = module.Vnets.vnet_name
+  vnet_name = module.Vnets.vnet_name
+  Rg_location = azurerm_resource_group.Demo1.location
+  Rg_name = azurerm_resource_group.Demo1.name
 }
