@@ -70,6 +70,5 @@ module "Vnets" {
 module "subnets" {
   source = "./modules/az_networks_subnet"
   vnet_name = module.Vnets.vnet_name
-  Rg_location = azurerm_resource_group.Demo1.location
-  Rg_name = azurerm_resource_group.Demo1.name
+  gruop_name_subnet = azurerm_resource_group.Demo1.name
 }
