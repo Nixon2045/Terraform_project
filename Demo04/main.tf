@@ -23,11 +23,11 @@ resource "azurerm_resource_group" "Demo04" {
 }
 
 resource "azurerm_storage_account" "sa" {
-    name = ${lower(var.naming_prefix)${random_integer.rn.result}}
+    name = "${lower(var.naming_prefix)}${random_integer.rn.result}"
     location = var.rg_location
-    acoount_tier = "standard"
     resource_group_name = var.rg_name
     account_replication_type = "LRS"
+    account_tier = "standard"
 }
 
 resource "azurerm_storage_container" "container" {
@@ -35,7 +35,7 @@ resource "azurerm_storage_container" "container" {
     storage_account_name = azurerm_storage_account.sa.name
 }
 
-data "azurerm_storage_account.sas" "sas" {
+data "azurerm_storage_account_sas" "sas" {
     connection_string = azurerm_storage_account.sa.primary_connection_string
     https_only = true
     resource_types = {
@@ -44,11 +44,25 @@ data "azurerm_storage_account.sas" "sas" {
         object = true
     }
     start = timestamp()
-    expire = timeadd(timestamp(), "17000h")
+    expiry   = timeadd(timestamp(), "17000h")
     services {
         blob = true
         queue = false
         table = false
         file = false
     }
+}
+
+resource "local_file" "post_config" {
+        depends_on = [azurerm_storage_container.container]
+        filename = "${path.module}/backend-config.txt"
+        content = <<EOF
+        storage_account_name = "${azurerm_storage_account.sa.name}"
+        container_name = "terraform-state"
+        key = "terraform.tfstate"
+        sas_token = "${data.azurerm_storage_account_sas.sas.sas}"
+
+
+
+        EOF
 }
