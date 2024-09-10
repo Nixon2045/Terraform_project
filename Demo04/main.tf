@@ -8,7 +8,8 @@ terraform {
 }
 
 provider "azurerm" {
-    features {} 
+    features {}
+    subscription_id = "647ea278-4ab3-46fc-9478-0b4943458b45"
 }
 
 resource random_integer rn {
@@ -25,26 +26,38 @@ resource "azurerm_resource_group" "Demo04" {
 resource "azurerm_storage_account" "sa" {
     name = "${lower(var.naming_prefix)}${random_integer.rn.result}"
     location = var.rg_location
-    resource_group_name = var.rg_name
+    resource_group_name = azurerm_resource_group.Demo04.name
     account_replication_type = "LRS"
-    account_tier = "standard"
+    account_tier = "Standard"
 }
 
 resource "azurerm_storage_container" "container" {
-    name = "terraform_state"
+    name = "terraform-state"
     storage_account_name = azurerm_storage_account.sa.name
 }
 
 data "azurerm_storage_account_sas" "sas" {
     connection_string = azurerm_storage_account.sa.primary_connection_string
     https_only = true
-    resource_types = {
+    start = timestamp()
+    expiry   = timeadd(timestamp(), "17000h")
+  permissions {
+    add     = true
+    create  = true
+    delete  = true
+    filter  = true
+    list    = true
+    process = false
+    read    = true
+    tag     = true
+    update  = false
+    write   = true
+  }
+    resource_types {
         service = true
         container = true
         object = true
     }
-    start = timestamp()
-    expiry   = timeadd(timestamp(), "17000h")
     services {
         blob = true
         queue = false
