@@ -1,7 +1,7 @@
-        storage_account_name = "ms62980"
+        storage_account_name = "ms29424"
         container_name = "terraform-state"
         key = "terraform.tfstate"
-        sas_token = "?sv=2022-11-02&ss=b&srt=sco&sp=rwdlactf&se=2026-08-20T06:04:41Z&st=2024-09-10T22:04:41Z&spr=https&sig=0Xr7Try1TPzEx%2B2wQA1UI0sOmS7lyr4qNE7dnEO0mp4%3D"
+        sas_token = "?sv=2022-11-02&ss=b&srt=sco&sp=rwdlactf&se=2026-08-20T11:10:03Z&st=2024-09-11T03:10:03Z&spr=https&sig=juklGtpikuib2Ib2GiJVHfN5wy%2FJ%2BeujLoVsZd%2FQdpc%3D"
 
 
 
